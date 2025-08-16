@@ -64,14 +64,3 @@ This game follows **FIDE rules**, including:
 - 🏆 Player ratings & leaderboards  
 
 ---
-
-## 📸 Screenshots
-*(Add screenshots or a demo GIF here)*  
-
----
-
-## 📜 License
-This project uses **Stockfish Engine** (GPL v3).  
-The UI and integration code are open-source. Contributions welcome!  
-
----
