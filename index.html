@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Chess Game</title>
+<style>
+  :root{
+    --square: 140px;
+    --speed: 18s;
+    --gold: #f4c542;
+    --gold-dark: #dba727;
+    --red: #ff5c5c;
+    --blue-deep: #0d1b2a;
+    --blue-mid: #1b263b;
+    --white-soft: rgba(255,255,255,0.95);
+  }
+
+  body{
+    margin:0;
+    height:100vh;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family: "Poppins", sans-serif;
+    color: var(--white-soft);
+
+    background:
+      radial-gradient(1200px 800px at 10% 10%, rgba(255,255,255,.06), transparent 60%),
+      radial-gradient(1200px 800px at 90% 90%, rgba(255,255,255,.05), transparent 60%),
+      conic-gradient(from 45deg,
+        #0000 0 25%, rgba(0,0,0,.55) 0 50%, #0000 0 75%, rgba(0,0,0,.55) 0)
+        0 0 / var(--square) var(--square),
+      conic-gradient(from 45deg,
+        #0000 0 25%, rgba(255,255,255,.08) 0 50%, #0000 0 75%, rgba(255,255,255,.08) 0)
+        calc(var(--square)/2) calc(var(--square)/2) / var(--square) var(--square),
+      var(--blue-mid);
+
+    animation: drift var(--speed) linear infinite;
+    position:relative;
+  }
+
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background:
+      radial-gradient(1200px 800px at 50% 30%, rgba(0,0,0,.35), transparent 40%),
+      radial-gradient(900px 600px at 50% 120%, rgba(0,0,0,.65), transparent 50%),
+      linear-gradient(to bottom, rgba(0,0,0,.55), rgba(0,0,0,.7));
+    pointer-events:none;
+  }
+
+  @keyframes drift{
+    0%   { background-position: 0 0, 0 0, 0 0, calc(var(--square)/2) calc(var(--square)/2); }
+    100% { background-position: 20px 10px, -20px -10px, 200px 120px, calc(200px + var(--square)/2) calc(120px + var(--square)/2); }
+  }
+
+  .floaters{
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+    filter: drop-shadow(0 6px 12px rgba(0,0,0,.6));
+    opacity:.75;
+  }
+
+  .floater{
+    position:absolute;
+    line-height:1;
+    color: var(--gold);
+    animation: bob 6s ease-in-out infinite, sway 18s linear infinite, glow 1.2s ease-in-out infinite alternate;
+    user-select:none;
+  }
+
+  @keyframes bob{
+    0%,100%{ transform: translateY(0) }
+    50%    { transform: translateY(-12px) }
+  }
+
+  @keyframes sway{
+    0%   { transform: translateX(0) rotate(0deg) }
+    50%  { transform: translateX(12px) rotate(2deg) }
+    100% { transform: translateX(0) rotate(0deg) }
+  }
+
+  @keyframes glow{
+    0% { text-shadow: 0 0 5px rgba(255,215,0,0.3); opacity:0.4; }
+    100% { text-shadow: 0 0 15px rgba(255,215,0,0.8); opacity:0.8; }
+  }
+
+  .menu{
+    position:relative; z-index:1;
+    background: rgba(13,27,42,0.75);
+    backdrop-filter: blur(14px);
+    border-radius: 22px;
+    padding: 42px 36px;
+    text-align:center;
+    width: min(92vw, 520px);
+    animation: fadeIn .9s ease both;
+  }
+
+  h1{
+    margin:0 0 10px; 
+    font-size: clamp(32px, 5vw, 48px);
+    text-shadow: 0 2px 8px rgba(0,0,0,.8);
+    color: var(--gold);
+  }
+  .subtitle{
+    opacity:.9; 
+    margin-bottom:22px; 
+    font-size: 1.05rem;
+  }
+
+  .buttons{ 
+    display:flex; 
+    gap:14px; 
+    flex-wrap:wrap; 
+    justify-content:center; 
+    margin-top:10px; 
+  }
+
+  .btn{
+    appearance:none; 
+    border:0; 
+    cursor:pointer;
+    border-radius: 999px; 
+    padding:14px 24px; 
+    font-weight:700;
+    box-shadow: 0 6px 16px rgba(0,0,0,.35);
+    transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+    font-size: 1rem;
+  }
+  .btn-primary{
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color:#111;
+  }
+  .btn-secondary{
+    background: linear-gradient(135deg, var(--red), #c0392b);
+    color:#fff;
+  }
+  .btn:hover{ 
+    transform: translateY(-2px); 
+    box-shadow: 0 10px 20px rgba(0,0,0,.45); 
+    filter:saturate(1.08); 
+  }
+
+  @keyframes fadeIn{
+    from{ opacity:0; transform: translateY(14px) }
+    to  { opacity:1; transform: translateY(0) }
+  }
+</style>
+</head>
+<body>
+
+  <div class="floaters" aria-hidden="true" id="floaters"></div>
+
+  <div class="menu">
+    <h1>♔ Welcome to </h1>
+    <h1> Check & Mate</h1>
+    <div class="subtitle">Choose your mode and make your move</div>
+    <div class="buttons">
+      <button class="btn btn-primary" onclick="location.href='index_chess.html'" aria-label="Play against computer">Play vs Computer</button>
+      <button class="btn btn-secondary" onclick="location.href='index_PVP_chess.html'" aria-label="Play with a friend on the same device">Pass & Play</button>
+    </div>
+  </div>
+
+<script>
+  const pieces = ['♔','♕','♖','♗','♘','♙'];
+  const container = document.getElementById('floaters');
+
+  for(let i=0; i<12; i++){
+    const span = document.createElement('div');
+    span.className = 'floater';
+    span.textContent = pieces[Math.floor(Math.random()*pieces.length)];
+    span.style.left = Math.random()*100 + '%';
+    span.style.top = Math.random()*100 + '%';
+    span.style.fontSize = (Math.random()*50 + 30) + 'px';
+    span.style.animationDuration = 
+      (5 + Math.random()*4) + 's, ' +  
+      (15 + Math.random()*10) + 's, ' + 
+      (0.8 + Math.random()*0.6) + 's';
+    container.appendChild(span);
+  }
+</script>
+
+</body>
+</html>
