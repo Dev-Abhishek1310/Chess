@@ -7,6 +7,7 @@ Welcome to **PVP Chess** – a modern, web-based chess game where you can battle
 ---
 
 ## 🚀 Live Demo
+🔗 Try it here:
 *https://dev-abhishek1310.github.io/Chess/*
 
 ---
