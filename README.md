@@ -6,6 +6,13 @@ Welcome to **PVP Chess** – a modern, web-based chess game where you can battle
 
 ---
 
+## 🚀 Live Demo
+
+🔗 Try it here (replace with your link):  
+*https://dev-abhishek1310.github.io/Chess/*
+
+---
+
 ## 🎮 Game Modes
 - 🧠 **Play vs Stockfish**  
   - Integrated **Stockfish engine** (JavaScript/WebAssembly build)  
@@ -17,6 +24,7 @@ Welcome to **PVP Chess** – a modern, web-based chess game where you can battle
   - Great for casual matches with friends  
 
 ---
+
 
 ## ♟️ Chess Rules Implemented
 This game follows **FIDE rules**, including:  
